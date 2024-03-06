@@ -40,7 +40,7 @@ void updateFeedGame(Adafruit_SH1106G &display, int joyX, int joyButton, int SCRE
         foodX = random(0, SCREEN_WIDTH - foodSize);
     }
 
-    if (foodY >= 40 && foodY <= 60 && foodX >= feedDinoX && foodX <= feedDinoX + 20 && NUTRITION <= 95) {
+    if (foodY >= 40 && foodY <= 60 && foodX >= feedDinoX && foodX <= feedDinoX + 20 && NUTRITION <= 98) {
         NUTRITION += 2;
         foodY = 0;
         foodX = random(0, SCREEN_WIDTH - foodSize);
