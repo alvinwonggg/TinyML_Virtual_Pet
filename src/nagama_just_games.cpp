@@ -163,6 +163,58 @@ void displayDinosaur() {
     }
 }
 
+
+// void displayDinosaur() {
+//       // Get dinosaur sprite to draw based on happiness and movement direction
+//     if(dinosaurSpeed >= 0) {
+//       current_dino_sprite = dino_right[HAPPINESS > 50 ? 0 : 1];
+//     } else {
+//       current_dino_sprite = dino_left[HAPPINESS > 50 ? 0 : 1];
+//     }
+
+    
+
+//     display.drawBitmap(dinosaurX, dinosaurY, current_dino_sprite, 128, 64, SH110X_WHITE);
+
+//     // if (ENERGY < 30) {
+//     //     // Assuming eye positions for the dinosaur, adjust these based on your sprite
+//     //     int eyePosX1 = dinosaurX + 62; // X position for the first eye
+//     //     int eyePosY1 = dinosaurY +25; // Y position for the first eye
+//     //     int eyeRadius = 3; // Radius of the eye circles
+
+//     //     // Draw circles over the eyes to make the dinosaur look sleepy
+//     //     display.drawRoundRect(eyePosX1, eyePosY1, 12, 4, eyeRadius, SH110X_WHITE);
+//     //     display.fillRoundRect(eyePosX1, eyePosY1, 12, 4, eyeRadius, SH110X_BLACK);
+
+//     // }
+//       if (ENERGY < 30) {
+//         // Based on the image provided, let's assume these are the eye positions
+//         int eyePosX = dinosaurX + 62; // X position for the eye
+//         int eyePosY = dinosaurY + 25; // Y position for the eye
+//         int eyeWidth = 10; // Initial width of the eyelid
+//         int eyeHeight = 2 + (30 - ENERGY) / 10; // Height of the eyelid increases as ENERGY decreases
+//         int eyeRadius = 3; // Radius for the round corners of the eyelid
+
+//         // Ensure the height does not exceed a certain limit, adjust if necessary
+//         if (eyeHeight > 6) {
+//             eyeHeight = 6;
+//         }
+
+//         // Draw and fill the eyelids to make the dinosaur look sleepy
+//         display.drawRoundRect(eyePosX, eyePosY, eyeWidth, eyeHeight, eyeRadius, SH110X_WHITE);
+//         display.fillRoundRect(eyePosX, eyePosY, eyeWidth, eyeHeight, eyeRadius, SH110X_BLACK);
+//     }
+
+
+//     // Move the dinosaur horizontally
+//     dinosaurX += dinosaurSpeed;
+
+//     // Check for boundaries and reverse direction
+//     if (dinosaurX <= -64 || dinosaurX >= SCREEN_WIDTH - 64) {
+//       dinosaurSpeed = -dinosaurSpeed;
+//     }  
+// }
+
 void checkForEnterGame() {
       // Example of triggering the game
     if (menuCount == 0 && joyButton == LOW && selected[0] == false) { // Assuming "Feed" is the first menu item
@@ -219,11 +271,35 @@ void setup() {
 
 
 void loop() {
+
+  unsigned long currentMillis = millis();
+
   // Read and map joystick input values, these may change depending on the joystick you use!!!
   joyX = map(analogRead(JOY_X), 0, 1023, 0, 32);
   joyY = map(analogRead(JOY_Y), 0, 1023, 0, 32);
   joyButton = digitalRead(JOY_BTN);
   display.clearDisplay();
+  if (currentMillis - previousMillis >= 10000) {
+    // Save the last time you decremented the values
+    previousMillis = currentMillis;
+    Serial.println("Decrementing values");
+    Serial.println(NUTRITION);
+    Serial.println(ENERGY);
+    Serial.println(HAPPINESS);
+
+    // Decrement the global variables
+    if (NUTRITION > 0) {
+      NUTRITION -= 1;
+    }
+
+    if (ENERGY > 0) {
+      ENERGY -= 1;
+    }
+
+    if (HAPPINESS > 0) {
+      HAPPINESS -= 1;
+    }
+  }
 
 
   if(isGameActive) { // If game is active, go to function to check which game active and run from there
@@ -239,3 +315,4 @@ void loop() {
   display.display(); // Read from display buffer and display it
   delay(20); // Speed up simulation
 }
+// test 
