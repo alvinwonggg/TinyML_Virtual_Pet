@@ -48,10 +48,9 @@ int dinosaurY = 0;
 int dinosaurSpeed = 2;
 
 // Internal state values [0, 100] for hunger, happiness, and tiredness
-int NUTRITION = 25;
-int NUTRITION = 25;
-int HAPPINESS = 51;
-int ENERGY = 48;
+int NUTRITION = 100;
+int HAPPINESS = 100;
+int ENERGY = 100;
 bool isGameActive = false;
 
 // Timer variables
@@ -209,7 +208,7 @@ void setup() {
   pinMode(JOY_BTN, INPUT_PULLUP);
 
   // Initialize OLED display
-  I2C_OLED.begin(I2C_SDA, I2C_SCL, 100000); 
+  I2C_OLED.begin(I2C_SDA, I2C_SCL, 10000); 
   display.begin(0x3C, true); // Address 0x3C default
   display.display();
   delay(2000);

@@ -18,6 +18,7 @@ const unsigned long interval = 1000;
 void startPetGame(Adafruit_SH1106G &display) {
   display.clearDisplay();
   remainingTime = 30;
+  count = 0;
   Serial.println("in pet game");
   display.drawRect(0, 16, 32, 32, SH110X_WHITE);
   display.drawBitmap(16, 0, bitmap_right_tail_down, 128, 64, SH110X_WHITE);
@@ -40,15 +41,18 @@ void updatePetGame(Adafruit_SH1106G &display, int SCREEN_WIDTH, int SCREEN_HEIGH
   display.setCursor(0, 0);
   display.print("Time Remaining: ");
   display.print(remainingTime);
+  Serial.println(count);
 
   if (currentMillis - petPreviousMillis >= interval) {
     petPreviousMillis = currentMillis;
     if (remainingTime >= 0) {
       remainingTime--;
-    }else if(count-1 >= BOX_SIZE*BOX_SIZE){
+    } 
+    if(count >= 25 || remainingTime < 0){
       HAPPINESS += remainingTime;
       Serial.println(HAPPINESS);
-      return;
+      selected[1] = false;
+      isGameActive = false;
       //game end code since no more remaining time user just has to press the main putton
     }
   }
@@ -71,9 +75,10 @@ void updatePetGame(Adafruit_SH1106G &display, int SCREEN_WIDTH, int SCREEN_HEIGH
       if (cursorX >= boxX && cursorX < boxX + BOX_SIZE && cursorY >= boxY && cursorY < boxY + BOX_SIZE) {
         // If the cursor is over the box, clear it
         display.fillRect(boxX, boxY, BOX_SIZE, BOX_SIZE, SH110X_BLACK);
-        display.display();
+        if(!seen[i][j]) {
+          count++;
+        }
         seen[i][j] = true;
-        count++;
         break; // Exit the loop after clearing one box
       }
     }

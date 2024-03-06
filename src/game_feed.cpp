@@ -45,6 +45,11 @@ void updateFeedGame(Adafruit_SH1106G &display, int joyX, int joyButton, int SCRE
         foodY = 0;
         foodX = random(0, SCREEN_WIDTH - foodSize);
     }
+
+    if(NUTRITION >= 100) {
+        selected[0] = false;
+        isGameActive = false;
+    }
 }
 
 void drawGame(Adafruit_SH1106G &display) {
