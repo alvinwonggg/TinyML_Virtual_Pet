@@ -48,9 +48,9 @@ int dinosaurY = 0;
 int dinosaurSpeed = 2;
 
 // Internal state values [0, 100] for hunger, happiness, and tiredness
-int NUTRITION = 100;
-int HAPPINESS = 100;
-int ENERGY = 100;
+int NUTRITION = 50;
+int HAPPINESS = 50;
+int ENERGY = 50;
 bool isGameActive = false;
 
 // Timer variables
@@ -229,10 +229,6 @@ void loop() {
   if (currentMillis - previousMillis >= 10000) {
     // Save the last time you decremented the values
     previousMillis = currentMillis;
-    Serial.println("Decrementing values");
-    Serial.println(NUTRITION);
-    Serial.println(ENERGY);
-    Serial.println(HAPPINESS);
 
     // Decrement the global variables
     if (NUTRITION > 0) {

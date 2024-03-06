@@ -15,7 +15,7 @@ int playDinoX = 64;
 void startPlayGame(int screenWidth, int screenHeight) {
   Serial.println("in play game");
   isGameActive = true;
-  lives = 3;
+  lives = 100;
 
   for (int i = 0; i < asteroidCount; i++) {
     asteroidsX[i] = random(screenWidth); // Random X position
@@ -90,7 +90,7 @@ if (checkCollision(playDinoX, playDinoY, asteroidsX, asteroidsY)&& lives > 0 && 
 
 bool checkCollision(int playDinoX, int playDinoY, const int *asteroidsX, const int *asteroidsY) {
   for (int i = 0; i < asteroidCount; i++) {
-    if (abs(playDinoX - asteroidsX[i]) < 5 && abs(playDinoY - asteroidsY[i]) < 5) {
+    if(asteroidsX[i] >= playDinoX && asteroidsX[i] <= playDinoX+20 && asteroidsY[i] >= playDinoY && asteroidsY[i] <= playDinoY+20) {
       return true;
     }
   }
