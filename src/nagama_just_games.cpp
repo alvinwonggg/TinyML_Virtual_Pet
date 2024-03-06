@@ -49,7 +49,7 @@ int dinosaurSpeed = 2;
 
 // Internal state values [0, 100] for hunger, happiness, and tiredness
 int NUTRITION = 48;
-int HAPPINESS = 48;
+int HAPPINESS = 51;
 int ENERGY = 48;
 bool isGameActive = false;
 
@@ -115,14 +115,26 @@ void flashButtons() {
 }
 
 void displayDinosaur() {
-      // Get dinosaur sprite to draw based on happiness and movement direction
-    if(dinosaurSpeed >= 0) {
+    // Get dinosaur sprite to draw based on happiness and movement direction
+    if(dinosaurSpeed >= 0) { //going right
       current_dino_sprite = dino_right[HAPPINESS > 50 ? 0 : 1];
-    } else {
+    } else { //going left
       current_dino_sprite = dino_left[HAPPINESS > 50 ? 0 : 1];
     }
-
     display.drawBitmap(dinosaurX, dinosaurY, current_dino_sprite, 128, 64, SH110X_WHITE);
+
+    //Display triangle hunger on stomach
+    if(dinosaurSpeed >= 0) { //going right
+      display.fillTriangle(dinosaurX+SCREEN_WIDTH/2-15, SCREEN_HEIGHT-5, dinosaurX+SCREEN_WIDTH/2-3, SCREEN_HEIGHT-5, dinosaurX+SCREEN_WIDTH/2, SCREEN_HEIGHT-22, SH110X_WHITE);
+
+      display.fillTriangle(dinosaurX+SCREEN_WIDTH/2-15, SCREEN_HEIGHT-5, dinosaurX+SCREEN_WIDTH/2-3, SCREEN_HEIGHT-5, dinosaurX+SCREEN_WIDTH/2, SCREEN_HEIGHT-22, SH110X_WHITE);
+
+    } else { //going left
+      display.fillTriangle(dinosaurX+SCREEN_WIDTH/2+15, SCREEN_HEIGHT-5, dinosaurX+SCREEN_WIDTH/2+3, SCREEN_HEIGHT-5, dinosaurX+SCREEN_WIDTH/2, SCREEN_HEIGHT-22, SH110X_WHITE);
+        if(NUTRITION < 50) {
+        
+      }
+    }
 
     // Move the dinosaur horizontally
     dinosaurX += dinosaurSpeed;
@@ -196,12 +208,9 @@ void loop() {
   display.clearDisplay();
 
 
-  // If game is active, go to function to check which game active and run from there
-  if(isGameActive) {
+  if(isGameActive) { // If game is active, go to function to check which game active and run from there
     gameSelection();
-  }
-  // Game is not in progress
-  else {
+  } else { // Game is not in progress
     menuNavigation();
     flashButtons();
     displayDinosaur();
