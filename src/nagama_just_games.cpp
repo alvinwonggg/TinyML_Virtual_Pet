@@ -217,11 +217,35 @@ void setup() {
 
 
 void loop() {
+
+  unsigned long currentMillis = millis();
+
   // Read and map joystick input values, these may change depending on the joystick you use!!!
   joyX = map(analogRead(JOY_X), 0, 1023, 0, 32);
   joyY = map(analogRead(JOY_Y), 0, 1023, 0, 32);
   joyButton = digitalRead(JOY_BTN);
   display.clearDisplay();
+  if (currentMillis - previousMillis >= 10000) {
+    // Save the last time you decremented the values
+    previousMillis = currentMillis;
+    Serial.println("Decrementing values");
+    Serial.println(NUTRITION);
+    Serial.println(ENERGY);
+    Serial.println(HAPPINESS);
+
+    // Decrement the global variables
+    if (NUTRITION > 0) {
+      NUTRITION -= 1;
+    }
+
+    if (ENERGY > 0) {
+      ENERGY -= 1;
+    }
+
+    if (HAPPINESS > 0) {
+      HAPPINESS -= 1;
+    }
+  }
 
 
   if(isGameActive) { // If game is active, go to function to check which game active and run from there

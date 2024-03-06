@@ -3,7 +3,7 @@
 // Definitions of global variables
 int foodY, foodX;
 const int foodSize = 4; // Size of food bits
-int foodFallSpeed = 2;
+int foodFallSpeed = 3;
 int feedDinoX = 0;
 bool pointLeft = true;
 
@@ -40,8 +40,8 @@ void updateFeedGame(Adafruit_SH1106G &display, int joyX, int joyButton, int SCRE
         foodX = random(0, SCREEN_WIDTH - foodSize);
     }
 
-    if (foodY >= 40 && foodY <= 60 && foodX >= feedDinoX && foodX <= feedDinoX + 20) {
-        NUTRITION += 5;
+    if (foodY >= 40 && foodY <= 60 && foodX >= feedDinoX && foodX <= feedDinoX + 20 && NUTRITION <= 95) {
+        NUTRITION += 2;
         foodY = 0;
         foodX = random(0, SCREEN_WIDTH - foodSize);
     }
