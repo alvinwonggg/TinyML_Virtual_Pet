@@ -45,10 +45,11 @@ void updatePetGame(Adafruit_SH1106G &display, int SCREEN_WIDTH, int SCREEN_HEIGH
     petPreviousMillis = currentMillis;
     if (remainingTime >= 0) {
       remainingTime--;
-    }else if(count >= BOX_SIZE*BOX_SIZE){
+    }else if(count-1 >= BOX_SIZE*BOX_SIZE){
       HAPPINESS += remainingTime;
+      Serial.println(HAPPINESS);
       return;
-      //game end code since no more remianing time user just has to press the main putton
+      //game end code since no more remaining time user just has to press the main putton
     }
   }
 

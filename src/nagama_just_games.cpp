@@ -49,6 +49,7 @@ int dinosaurSpeed = 2;
 
 // Internal state values [0, 100] for hunger, happiness, and tiredness
 int NUTRITION = 25;
+int NUTRITION = 25;
 int HAPPINESS = 51;
 int ENERGY = 48;
 bool isGameActive = false;
@@ -148,8 +149,11 @@ void displayDinosaur() {
     if(dinosaurSpeed >= 0) { //going right
       display.fillTriangle(dinosaurX+SCREEN_WIDTH/2-15, SCREEN_HEIGHT-5, dinosaurX+SCREEN_WIDTH/2-3, SCREEN_HEIGHT-5, dinosaurX+SCREEN_WIDTH/2, SCREEN_HEIGHT-22, SH110X_WHITE);
       display.fillTriangle(dinosaurX+SCREEN_WIDTH/2-15+floor(float(NUTRITION)/100.0*14.0), SCREEN_HEIGHT-5-floor(float(NUTRITION)/100.0*17.0), dinosaurX+SCREEN_WIDTH/2-4+floor(float(NUTRITION)/100.0*3.0), SCREEN_HEIGHT-5-floor(float(NUTRITION)/100.0*17.0), dinosaurX+SCREEN_WIDTH/2-1, SCREEN_HEIGHT-22, SH110X_BLACK);
+      display.fillTriangle(dinosaurX+SCREEN_WIDTH/2-15+floor(float(NUTRITION)/100.0*14.0), SCREEN_HEIGHT-5-floor(float(NUTRITION)/100.0*17.0), dinosaurX+SCREEN_WIDTH/2-4+floor(float(NUTRITION)/100.0*3.0), SCREEN_HEIGHT-5-floor(float(NUTRITION)/100.0*17.0), dinosaurX+SCREEN_WIDTH/2-1, SCREEN_HEIGHT-22, SH110X_BLACK);
     } else { //going left
       display.fillTriangle(dinosaurX+SCREEN_WIDTH/2+15, SCREEN_HEIGHT-5, dinosaurX+SCREEN_WIDTH/2+3, SCREEN_HEIGHT-5, dinosaurX+SCREEN_WIDTH/2, SCREEN_HEIGHT-22, SH110X_WHITE);
+      //dinosaurX+SCREEN_WIDTH/2, SCREEN_HEIGHT-22
+      display.fillTriangle(dinosaurX+SCREEN_WIDTH/2+15-floor(float(NUTRITION)/100.0*15.0), SCREEN_HEIGHT-5-floor(float(NUTRITION)/100.0*17.0), dinosaurX+SCREEN_WIDTH/2+3-floor(float(NUTRITION)/100.0*3.0), SCREEN_HEIGHT-5-floor(float(NUTRITION)/100.0*17.0), dinosaurX+SCREEN_WIDTH/2, SCREEN_HEIGHT-22, SH110X_BLACK);
       //dinosaurX+SCREEN_WIDTH/2, SCREEN_HEIGHT-22
       display.fillTriangle(dinosaurX+SCREEN_WIDTH/2+15-floor(float(NUTRITION)/100.0*15.0), SCREEN_HEIGHT-5-floor(float(NUTRITION)/100.0*17.0), dinosaurX+SCREEN_WIDTH/2+3-floor(float(NUTRITION)/100.0*3.0), SCREEN_HEIGHT-5-floor(float(NUTRITION)/100.0*17.0), dinosaurX+SCREEN_WIDTH/2, SCREEN_HEIGHT-22, SH110X_BLACK);
     }
