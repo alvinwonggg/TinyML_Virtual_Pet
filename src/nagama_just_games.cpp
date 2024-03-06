@@ -116,12 +116,33 @@ void flashButtons() {
 
 void displayDinosaur() {
     // Get dinosaur sprite to draw based on happiness and movement direction
-    if(dinosaurSpeed >= 0) { //going right
-      current_dino_sprite = dino_right[HAPPINESS > 50 ? 0 : 1];
-    } else { //going left
-      current_dino_sprite = dino_left[HAPPINESS > 50 ? 0 : 1];
-    }
+    bool isFacingRight = dinosaurSpeed >= 0;
+    current_dino_sprite = isFacingRight ? dino_right[HAPPINESS > 50 ? 0 : 1] : dino_left[HAPPINESS > 50 ? 0 : 1];
+
+    // Draw the dinosaur bitmap
     display.drawBitmap(dinosaurX, dinosaurY, current_dino_sprite, 128, 64, SH110X_WHITE);
+
+    // Draw sleepy eyelids if ENERGY is below 30
+    if (ENERGY < 30) {
+        int eyeWidth = 10; // Width of the eyelid
+        int eyeHeight = 2 + (30 - ENERGY) / 10; // Height of the eyelid increases as ENERGY decreases
+        int eyeRadius = 3; // Radius for the round corners of the eyelid
+
+        // Ensure the height does not exceed a certain limit
+        eyeHeight = min(eyeHeight, 6);
+
+        // Determine eye position based on the direction the dinosaur is facing
+        int eyePosXRight = dinosaurX + 62; // X position for the right eye
+        int eyePosY = dinosaurY + 25; // Y position for the eyes
+        int eyePosXLeft = dinosaurX + (128 - 62 - eyeWidth); // X position for the left eye (mirror position)
+
+        // Choose the correct eye position based on the direction the dinosaur is facing
+        int eyePosX = isFacingRight ? eyePosXRight : eyePosXLeft;
+
+        // Draw and fill the eyelids to make the dinosaur look sleepy
+        display.drawRoundRect(eyePosX, eyePosY, eyeWidth, eyeHeight, eyeRadius, SH110X_WHITE);
+        display.fillRoundRect(eyePosX, eyePosY, eyeWidth, eyeHeight, eyeRadius, SH110X_BLACK);
+    }
 
     //Display triangle hunger on stomach
     if(dinosaurSpeed >= 0) { //going right
@@ -141,9 +162,61 @@ void displayDinosaur() {
 
     // Check for boundaries and reverse direction
     if (dinosaurX <= -64 || dinosaurX >= SCREEN_WIDTH - 64) {
-      dinosaurSpeed = -dinosaurSpeed;
-    }  
+        dinosaurSpeed = -dinosaurSpeed;
+    }
 }
+
+
+// void displayDinosaur() {
+//       // Get dinosaur sprite to draw based on happiness and movement direction
+//     if(dinosaurSpeed >= 0) {
+//       current_dino_sprite = dino_right[HAPPINESS > 50 ? 0 : 1];
+//     } else {
+//       current_dino_sprite = dino_left[HAPPINESS > 50 ? 0 : 1];
+//     }
+
+    
+
+//     display.drawBitmap(dinosaurX, dinosaurY, current_dino_sprite, 128, 64, SH110X_WHITE);
+
+//     // if (ENERGY < 30) {
+//     //     // Assuming eye positions for the dinosaur, adjust these based on your sprite
+//     //     int eyePosX1 = dinosaurX + 62; // X position for the first eye
+//     //     int eyePosY1 = dinosaurY +25; // Y position for the first eye
+//     //     int eyeRadius = 3; // Radius of the eye circles
+
+//     //     // Draw circles over the eyes to make the dinosaur look sleepy
+//     //     display.drawRoundRect(eyePosX1, eyePosY1, 12, 4, eyeRadius, SH110X_WHITE);
+//     //     display.fillRoundRect(eyePosX1, eyePosY1, 12, 4, eyeRadius, SH110X_BLACK);
+
+//     // }
+//       if (ENERGY < 30) {
+//         // Based on the image provided, let's assume these are the eye positions
+//         int eyePosX = dinosaurX + 62; // X position for the eye
+//         int eyePosY = dinosaurY + 25; // Y position for the eye
+//         int eyeWidth = 10; // Initial width of the eyelid
+//         int eyeHeight = 2 + (30 - ENERGY) / 10; // Height of the eyelid increases as ENERGY decreases
+//         int eyeRadius = 3; // Radius for the round corners of the eyelid
+
+//         // Ensure the height does not exceed a certain limit, adjust if necessary
+//         if (eyeHeight > 6) {
+//             eyeHeight = 6;
+//         }
+
+//         // Draw and fill the eyelids to make the dinosaur look sleepy
+//         display.drawRoundRect(eyePosX, eyePosY, eyeWidth, eyeHeight, eyeRadius, SH110X_WHITE);
+//         display.fillRoundRect(eyePosX, eyePosY, eyeWidth, eyeHeight, eyeRadius, SH110X_BLACK);
+//     }
+
+
+//     // Move the dinosaur horizontally
+//     dinosaurX += dinosaurSpeed;
+
+//     // Check for boundaries and reverse direction
+//     if (dinosaurX <= -64 || dinosaurX >= SCREEN_WIDTH - 64) {
+//       dinosaurSpeed = -dinosaurSpeed;
+//     }  
+// }
 
 void checkForEnterGame() {
       // Example of triggering the game
